@@ -2,7 +2,7 @@ SELECT *
 FROM `basedosdados.br_poder360_pesquisas.microdados`
 WHERE cargo LIKE 'p%' AND nome_municipio IS NOT NULL AND ano in (2002, 2014, 2020)
 ORDER BY ano, data
-limit 100;
+limit 10;
 
 SELECT MAX(margem_mais) AS max_margem,
       MIN(margem_mais) AS min_margem,
