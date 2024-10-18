@@ -1,0 +1,25 @@
+SELECT *
+FROM `basedosdados.br_poder360_pesquisas.microdados`
+WHERE cargo LIKE 'p%' AND nome_municipio IS NOT NULL AND ano in (2002, 2014, 2020)
+ORDER BY ano, data
+limit 100;
+
+SELECT MAX(margem_mais) AS max_margem,
+      MIN(margem_mais) AS min_margem,
+FROM `basedosdados.br_poder360_pesquisas.microdados` 
+WHERE margem_mais>0
+LIMIT 100;
+
+SELECT count(distinct sigla_uf) as qto_estados
+FROM `basedosdados.br_poder360_pesquisas.microdados`
+
+SELECT ano, sigla_uf, 
+    ROUND(AVG(quantidade_entrevistas)) as avg_entrevistas,
+    CASE WHEN AVG(quantidade_entrevistas) > 1000 THEN 'ALTA'
+          WHEN AVG(quantidade_entrevistas) BETWEEN 815 AND 834 THEN 'MÉDIA'
+        ELSE 'BAIXA' END AS categoria_entrevistas
+FROM `basedosdados.br_poder360_pesquisas.microdados`
+WHERE ano > 2010 AND sigla_uf IS NOT NULL
+GROUP BY ano, sigla_uf
+HAVING avg_entrevistas>800
+ORDER BY ano desc
